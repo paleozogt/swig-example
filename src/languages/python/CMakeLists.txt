@@ -1,8 +1,10 @@
 if (PYTHON)
     if (WIN32)
         set(PYLIB_SUFFIX .pyd)
+        set(ls dir /B)
     else()
         set(PYLIB_SUFFIX .so)
+        set(ls ls)
     endif()
 
     # configure the setup stuff
@@ -28,6 +30,7 @@ if (PYTHON)
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.py ${CMAKE_CURRENT_BINARY_DIR}/setup/${PYTHON_PACKAGE}/__init__.py
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:_pyfoobar> ${CMAKE_CURRENT_BINARY_DIR}/setup/${PYTHON_PACKAGE}
         COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/setup/setup.py bdist_wheel
+        COMMAND ${ls} dist > ${CMAKE_CURRENT_BINARY_DIR}/requirements.txt
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/setup
     )
     add_custom_target(pyfoobar DEPENDS _pyfoobar)
