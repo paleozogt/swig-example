@@ -7,7 +7,7 @@ if (PYTHON)
     endif()
 
     # make a virtualenv to install our generated whl file into
-    add_custom_command(COMMAND virtualenv ${venv_path}
+    add_custom_command(COMMAND virtualenv -p ${PYTHON_EXECUTABLE} ${venv_path}
                        COMMAND ${venv_bin}/pip install -r ${CMAKE_BINARY_DIR}/src/languages/python/requirements.txt
                        COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_BINARY_DIR}/pip-installed
                        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/pip-installed
