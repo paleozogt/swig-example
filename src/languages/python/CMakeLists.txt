@@ -27,7 +27,10 @@ if (PYTHON)
                           LINK_FLAGS ${PYTHON_LDFLAGS})
     target_link_libraries(_pyfoobar foobar)
     add_custom_command(TARGET _pyfoobar POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.py ${CMAKE_CURRENT_BINARY_DIR}/setup/${PYTHON_PACKAGE}/__init__.py
+        COMMAND ${CMAKE_COMMAND} 
+                    -DFROM=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.py -DTO=${CMAKE_CURRENT_BINARY_DIR}/setup/${PYTHON_PACKAGE}/__init__.py 
+                    -DMATCH_STRING='2, 7, 0' -DREPLACE_STRING='9, 9, 9' 
+                    -P ${FILE_REPLACE_SCRIPT}
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:_pyfoobar> ${CMAKE_CURRENT_BINARY_DIR}/setup/${PYTHON_PACKAGE}
         COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/setup/setup.py bdist_wheel
         COMMAND ${ls} dist > ${CMAKE_CURRENT_BINARY_DIR}/requirements.txt

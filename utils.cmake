@@ -54,3 +54,9 @@ macro(setup_python)
         set(PYTHON 1)
     endif()
 endmacro()
+
+# build-time file replacement
+set(FILE_REPLACE_SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/replace.cmake)
+file(WRITE  ${FILE_REPLACE_SCRIPT} "file(READ \${FROM} file_contents) \n")
+file(APPEND ${FILE_REPLACE_SCRIPT} "string(REPLACE \${MATCH_STRING} \${REPLACE_STRING} file_contents \${file_contents}) \n")
+file(APPEND ${FILE_REPLACE_SCRIPT} "file(WRITE \${TO} \${file_contents}) \n")
