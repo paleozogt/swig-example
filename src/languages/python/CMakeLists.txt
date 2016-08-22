@@ -14,11 +14,11 @@ if (PYTHON)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/MANIFEST.in ${CMAKE_CURRENT_BINARY_DIR}/setup/MANIFEST.in)
 
     # swig
-    set_source_files_properties(../Foobar.i PROPERTIES CPLUSPLUS ON)
-    set_property(SOURCE ../Foobar.i PROPERTY SWIG_FLAGS
+    set_source_files_properties(../interface.i PROPERTIES CPLUSPLUS ON)
+    set_property(SOURCE ../interface.i PROPERTY SWIG_FLAGS
                  ${swig_extra_flags}
                  -Wall)
-    swig_add_module(pyfoobar python ../Foobar.i)
+    swig_add_module(pyfoobar python ../interface.i)
     swig_link_libraries(pyfoobar)
     set_target_properties(_pyfoobar PROPERTIES 
                           OUTPUT_NAME "_${CMAKE_PROJECT_NAME}"
